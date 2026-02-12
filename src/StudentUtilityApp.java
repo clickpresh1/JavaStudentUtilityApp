@@ -1,37 +1,64 @@
 import java.util.Scanner;
 
 public class StudentUtilityApp {
-    public static void chooseActivity(int a) {
-        if (a == 1) addTwoNumbers();
-        else if (a == 2) evernOrOdd();
-        else if (a == 3) printToN();
-        else if (a == 4) dayOfTheWeek();
+    public static void chooseActivity(Scanner scan, int a) {
+        if (a == 1) addTwoNumbers(scan);
+        else if (a == 2) evernOrOdd(scan);
+        else if (a == 3) printToN(scan);
+        else if (a == 4) dayOfTheWeek(scan);
     } 
 
-    public static void addTwoNumbers() {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Enter a number x: "); int x = scan.nextInt();
-        System.out.print("Enter another number y: "); int y = scan.nextInt();
+    public static int scanEntry(Scanner scan) {
+        while (!scan.hasNextInt()) {
+            scan.next();
+            System.out.print("Invalid entry! Please enter an integer: "); 
+        } 
+
+        return scan.nextInt();
+    } 
+
+    public static int scanEntry(Scanner scan, int a, int b) {
+        while (true) {
+            if (!scan.hasNextInt()) {
+                scan.next();
+                System.out.print("Invalid entry! Please enter an integer: "); 
+            } else {
+                int x = scan.nextInt();
+                if ((x >= a) && (x <= b)) return x;
+                else System.out.print("Invalid number! Number must be an integer between " + a + " and " + b + ", inclusive: ");
+            }
+        } 
+    }
+
+    public static void addTwoNumbers(Scanner scan) {
+        System.out.print("Enter an integer x: "); 
+        int x = scanEntry(scan);
+        
+        System.out.print("Enter another integer x: "); 
+        int y = scanEntry(scan);
+
         System.out.println("The sum of the two numbers " + x + " and " + y + ", is " + (x + y));
     }
 
-    public static void evernOrOdd() {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter a number x: "); int x = scan.nextInt();
+    public static void evernOrOdd(Scanner scan) {
+        System.out.println("Enter a number x: "); 
+        int x = scanEntry(scan);
+
         String result = (x % 2 == 0) ? "EVEN" : "ODD";
 
-        System.out.println("The number x is " + result);
+        System.out.println("The number x, is " + result);
     } 
 
-    public static void printToN() {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Enter a number x: "); int x = scan.nextInt();
+    public static void printToN(Scanner scan) {
+        System.out.print("Enter a number x: "); 
+        int x = scanEntry(scan, 1, Integer.MAX_VALUE);
+
         for (int i = 1; i < x + 1; i++) System.out.println(i);
     } 
 
-    public static void dayOfTheWeek() {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Enter a number x: "); int x = scan.nextInt();
+    public static void dayOfTheWeek(Scanner scan) {
+        System.out.print("Enter a number x: "); 
+        int x = scanEntry(scan, 1, 7);
         String result = "";
 
         switch (x) {
@@ -69,7 +96,7 @@ public class StudentUtilityApp {
         while (true) {
             System.out.println();
             System.out.print("Enter a number for an activity: "); int choice = scan.nextInt();
-            if ((choice >= 1) && (choice <= 4)) chooseActivity(choice);
+            if ((choice >= 1) && (choice <= 4)) chooseActivity(scan, choice);
             else if (choice == 5) break;
             else System.out.println("Invalid choice! Enter a number between 1 and 5, both inclusive.");
         } 
